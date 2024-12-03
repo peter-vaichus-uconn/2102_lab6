@@ -1,11 +1,11 @@
-import React from 'react';
 
+class MyState {
 
-class MyState extends React.Component {
+    constructor() {
+        var my_score = 0;
+        var my_count = 0;
+    }
 
-    static my_score = 0;
-    static my_count = 0;
-    
 };
 
 export default MyState;

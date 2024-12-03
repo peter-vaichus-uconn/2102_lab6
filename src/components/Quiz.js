@@ -2,11 +2,8 @@ import React from 'react';
 import quizPageStyle from '../QuizPageStyle';
 
 import my_state from './my_state';
-import './my_state';
 
 import  my_questions from '../model/basic_questions.json';
-
-
 
 
 class Quiz extends React.Component {
