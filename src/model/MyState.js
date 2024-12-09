@@ -1,11 +1,22 @@
-
 class MyState {
+    my_score = 0; // Initialize directly
+    my_count = 0; // Initialize directly
 
-    constructor() {
-        var my_score = 0;
-        var my_count = 0;
+    getScore() {
+        return this.my_score;
     }
 
-};
+    getCount() {
+        return this.my_count;
+    }
+
+    updateScore(score) {
+        this.my_score = score;
+    }
+
+    updateCount(count) {
+        this.my_count = count;
+    }
+}
 
 export default MyState;
