@@ -1,33 +1,25 @@
 import React from 'react';
 import quizPageStyle from '../QuizPageStyle';
-import my_state from './my_state';
 import my_questions from '../model/basic_questions.json';
+import ScoreController from '../controller/ScoreController';  // Import the controller
 
 class Quiz extends React.Component {
     state = {
-        score: 0,
-        count: 0,
-        quizCompleted: false // To track if quiz is completed
+        quizCompleted: false
     };
 
-    incrementScore = () => {
-        this.setState((prevState) => ({
-            score: prevState.score + 1,
-            count: prevState.count + 1
-        }));
-        alert("You are correct!");
-    };
-
-    dontIncrementScore = () => {
-        this.setState((prevState) => ({
-            count: prevState.count + 1
-        }));
-        alert("Sorry - not correct");
+    handleAnswerClick = (isCorrect) => {
+        if (isCorrect) {
+            ScoreController.incrementScore();
+        } else {
+            ScoreController.dontIncrementScore();
+        }
     };
 
     handleSubmit = () => {
-        my_state.my_score = this.state.score;
-        my_state.my_count = this.state.count;
+        // Now using ScoreController to log score, no need for my_state
+        console.log("Total score: " + ScoreController.getScore() + "/" + ScoreController.getCount());
+        
         this.setState({ quizCompleted: true }); // Transition to results page
     };
 
@@ -43,7 +35,7 @@ class Quiz extends React.Component {
                                 <input
                                     type="radio"
                                     name={quest["id"]}
-                                    onClick={ans["isCorrect"] ? this.incrementScore : this.dontIncrementScore}
+                                    onClick={() => this.handleAnswerClick(ans["isCorrect"])}
                                     value={ans["isCorrect"]}
                                 />
                                 {ans["answer"]}
@@ -61,7 +53,7 @@ class Quiz extends React.Component {
     renderResults = () => (
         <div>
             <h1>Quiz Results</h1>
-            <p>Your score: {this.state.score} / {this.state.count}</p>
+            <p>Your score: {ScoreController.getScore()} / {ScoreController.getCount()}</p>
             <button onClick={() => this.setState({ quizCompleted: false })}>Take Another Quiz</button>
         </div>
     );
